@@ -31,7 +31,7 @@ export function createGallery(images) {
 
 
 export function clearGallery() {
-  galleryContainer.innerHTML = '';
+  galleryContainer.inserHTML = '';
 }
 
 export function showLoader() {
@@ -45,6 +45,6 @@ export function hideLoader() {
 export { lightbox };
 
 export function renderGallery(images) {
-  galleryContainer.innerHTML = createGallery(images);
+  galleryContainer.insertAdjacentHTML('beforeend', createGallery(images));
   lightbox.refresh();
 }
