@@ -7,6 +7,7 @@ import {
   renderGallery,
   showLoadMoreButton,
   hideLoadMoreButton,
+  lightbox,
 } from './js/render-functions.js';
 
 import './css/styles.css';
@@ -48,7 +49,7 @@ form.addEventListener('submit', async e => {
       const { images, total } = await getImagesByQuery(currentQuery, currentPage, perPage);
       hideLoader();
 
-      totalImagesAvailable = total;
+      totalImagesAvailable = Math.min(total, 500)
 
       if (!images.length) {
         iziToast.error({
@@ -60,10 +61,10 @@ form.addEventListener('submit', async e => {
       }
 
       renderGallery(images);
-      imagesLoaded += images.length;
+      imagesLoaded = images.length;
       form.reset();
 
-       checkEndOfCollection();
+       checkEndOfCollection(images.length);
 
     } catch (error) {
       hideLoader();
@@ -79,18 +80,33 @@ form.addEventListener('submit', async e => {
 document.querySelector('.load-more').addEventListener('click', async () => {
   currentPage += 1;
   showLoader();
+  hideLoadMoreButton();
 
   try {
     const { images } = await getImagesByQuery(currentQuery, currentPage, perPage);
     hideLoader();
 
+      if (!images.length) {
+      hideLoadMoreButton();
+      iziToast.info({
+        title: 'Info',
+        message: "We're sorry, but you've reached the end of search results.",
+        position: 'topRight',
+      });
+      return;
+    }
+
     appendToGallery(images);
+
+    lightbox.refresh();
+
     imagesLoaded += images.length;
     smoothScrollAfterLoad();
-    checkEndOfCollection();
+    checkEndOfCollection(images.length);
 
   } catch (error) {
     hideLoader();
+    showLoadMoreButton(); 
     iziToast.error({
       title: 'Error',
       message: 'Failed to load more images.',
@@ -111,8 +127,8 @@ function smoothScrollAfterLoad() {
   });
 }
 
-function checkEndOfCollection() {
-  if (imagesLoaded >= totalImagesAvailable) {
+function checkEndOfCollection(lastBatchLength) {
+  if (imagesLoaded >= totalImagesAvailable || lastBatchLength < perPage) {
     hideLoadMoreButton();
     iziToast.info({
       title: 'Info',
@@ -123,3 +139,4 @@ function checkEndOfCollection() {
     showLoadMoreButton();
   }
 }
+

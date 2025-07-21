@@ -17,8 +17,6 @@
 }
 
 .form {
-  position: sticky;
-  top: 0;
   left: 0;
   width: 100%;
   display: flex;
@@ -140,10 +138,6 @@
   font-size: 14px;
 }
 
-.hidden {
-  display: none;
-}
-
 .load-more {
   display: block;
   margin: 20px auto;
@@ -171,3 +165,6 @@
   cursor: not-allowed;
 }
 
+.load-more[hidden] {
+  display: none !important;
+}
