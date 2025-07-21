@@ -3,6 +3,7 @@ import 'simplelightbox/dist/simple-lightbox.min.css';
 
 const galleryContainer = document.querySelector('.gallery');
 const loader = document.querySelector('.loader');
+const loadMoreBtn = document.querySelector('.load-more');
 
 const lightbox = new SimpleLightbox('.gallery a', {
   captionsData: 'alt',
@@ -30,8 +31,18 @@ export function createGallery(images) {
 }
 
 
+export function renderGallery(images) {
+  galleryContainer.innerHTML = createGallery(images);
+  lightbox.refresh();
+}
+
+export function appendToGallery(images) {
+  galleryContainer.insertAdjacentHTML('beforeend', createGallery(images));
+  lightbox.refresh();
+}
+
 export function clearGallery() {
-  galleryContainer.inserHTML = '';
+  galleryContainer.innerHTML = '';
 }
 
 export function showLoader() {
@@ -42,9 +53,13 @@ export function hideLoader() {
   loader.classList.add('hidden');
 }
 
+export function showLoadMoreButton() {
+  loadMoreBtn.classList.remove('hidden');
+}
+
+export function hideLoadMoreButton() {
+  loadMoreBtn.classList.add('hidden');
+}
+
 export { lightbox };
 
-export function renderGallery(images) {
-  galleryContainer.insertAdjacentHTML('beforeend', createGallery(images));
-  lightbox.refresh();
-}
