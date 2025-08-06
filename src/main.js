@@ -98,8 +98,6 @@ document.querySelector('.load-more').addEventListener('click', async () => {
 
     appendToGallery(images);
 
-    lightbox.refresh();
-
     imagesLoaded += images.length;
     smoothScrollAfterLoad();
     checkEndOfCollection(images.length);
