@@ -73,8 +73,9 @@
 
 .loader {
   display: block;
-  width: 48px;
-  height: 48px;
+  /* display: flex; */
+  width: 20px;
+  height: 20px;
   margin: 40px auto;
   border: 5px solid #ccc;
   border-top-color: #3478f6;

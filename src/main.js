@@ -7,7 +7,7 @@ import {
   renderGallery,
   showLoadMoreButton,
   hideLoadMoreButton,
-  lightbox,
+ 
 } from './js/render-functions.js';
 
 import './css/styles.css';
